@@ -2,6 +2,7 @@ from airflow import DAG
 import pendulum
 import datetime
 from airflow.operators.email import EmailOperator
+from airflow.decorators import task
 
 with DAG(
     dag_id="dags_python_email_operator",
