@@ -2,7 +2,7 @@ from airflow import DAG
 import pendulum
 import datetime
 from airflow.operators.bash import BashOperator
-from airflow.operators import task
+from airflow.decorators import task
 
 with DAG(
     dag_id="dags_bash_python_with_xcom",
@@ -45,4 +45,4 @@ with DAG(
         print('return_value:' + return_value)
 
 
-        bash_push >> python_pull_xcom()
+    bash_push >> python_pull_xcom()
