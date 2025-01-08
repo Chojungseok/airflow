@@ -7,8 +7,8 @@ from airflow.operators.python import BranchPythonOperator
 with DAG(
     dag_id="dags_branch_python_operator",
     start_date=datetime(2025, 1, 5),
-    catchup=False,
-    schedule = None
+    schedule = None,
+    catchup=False
 )as dag:
     
     def select_random():
