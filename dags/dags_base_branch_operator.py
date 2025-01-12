@@ -10,7 +10,7 @@ with DAG(
     schedule = None,
     catchup=False
 )as dag:
-    class CustomBranchOperaotr(BaseBranchOperator):
+    class CustomBranchOperaotr(BranchPythonOperator):
         def choose_branch(self, context):
             import random
     
