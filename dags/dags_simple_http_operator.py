@@ -16,7 +16,7 @@ with DAG(
     tb_Cycle_Rent_Use_Day_Info = SimpleHttpOperator(
         task_id = 'tb_Cycle_Rent_Use_Day_Info',
         http_conn_id = 'openapi.seoul.go.kr',
-        endpoint = '{{var.value.apikey_openapi_seoul_go_kr}}/json/tbCycleRentUseDayInfo/1/1/2025',
+        endpoint = '{{var.value.apikey_openapi_seoul_go_kr}}/json/tbCycleRentUseDayInfo/1/10/20250101',
         method = 'GET',
         headers = {'Content-Type': 'application/json',
                    'charset' : 'utf-8',
