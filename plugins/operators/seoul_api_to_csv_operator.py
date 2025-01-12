@@ -54,6 +54,7 @@ class SeoulApiToCsvOperator(BaseOperator):
         content = json.loads(response.text)
 
         # key_nm = list(content.keys())[0]
+        print(request_url)
         print(content)
         print(type(content))
         # row_data = content.get(key_nm).get('row')
