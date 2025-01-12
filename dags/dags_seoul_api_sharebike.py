@@ -15,6 +15,7 @@ with DAG(
         dataset_nm='tbCycleRentUseDayInfo',
         path='/opt/airflow/files/tbCycleRentUseDayInfo/{{data_interval_end.in_timezone("Asia/Seoul") | ds_nodash}}',
         file_name='tbCycleRentUseDayInfo.csv'
+        base_dt='{{data_interval_end.in_timezone{"Asia/Seoul") | ds_nodash}}'
     )
 
 
