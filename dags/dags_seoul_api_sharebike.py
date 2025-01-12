@@ -15,7 +15,7 @@ with DAG(
         dataset_nm='tbCycleRentUseDayInfo',
         path='airflow/files/tbCycleRentUseDayInfo/{{data_interval_end.in_timezone("Asia/Seoul") | ds_nodash}}',
         file_name='tbCycleRentUseDayInfo.csv',
-        base_dt = '{{ (data_interval_end | timedelta(days=-1)).in_timezone("Asia/Seoul") | ds_nodash }}'
+        base_dt='{{ data_interval_end.in_timezone("Asia/Seoul") | ds_nodash }} -1'  # 날짜 자동 설정
 
     )
 
