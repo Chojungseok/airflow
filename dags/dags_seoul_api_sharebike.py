@@ -13,7 +13,7 @@ with DAG(
     tb_souel_sharebike_info = SeoulApiToCsvOperator(
         task_id = 'tb_souel_sharebike_info',
         dataset_nm='tbCycleRentUseDayInfo',
-        path='/opt/airflow/files/tbCycleRentUseDayInfo/{{data_interval_end.in_timezone("Asia/Seoul") | ds_nodash}}',
+        path='airflow/files/tbCycleRentUseDayInfo/{{data_interval_end.in_timezone("Asia/Seoul") | ds_nodash}}',
         file_name='tbCycleRentUseDayInfo.csv',
     )
 
@@ -22,7 +22,7 @@ with DAG(
     Seoul_share_bike_starion_List = SeoulApiToCsvOperator(
         task_id = 'Seoul_share_bike_starion_List',
         dataset_nm='bikeList',
-        path='/opt/airflow/files/bikeList/{{data_interval_end.in_timezone("Asia/Seoul") | ds_nodash}}',
+        path='airflow/files/bikeList/{{data_interval_end.in_timezone("Asia/Seoul") | ds_nodash}}',
         file_name='bikeList.csv'
     )
 
