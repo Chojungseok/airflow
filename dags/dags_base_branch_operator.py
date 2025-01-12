@@ -2,6 +2,7 @@ from airflow import DAG
 import pendulum
 import datetime
 from airflow.operators.python import PythonOperator, BranchPythonOperator
+from airflow.decorators import task
 
 
 with DAG(
