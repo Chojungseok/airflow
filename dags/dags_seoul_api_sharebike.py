@@ -13,20 +13,21 @@ with DAG(
     tb_souel_sharebike_info=SeoulApiToCsvOperator(
         task_id = 'tb_souel_sharebike_info',
         dataset_nm='tbCycleRentUseDayInfo',
-        path='airflow/files/tbCycleRentUseDayInfo/{{data_interval_end.in_timezone("Asia/Seoul") | ds_nodash}}',
+        path='airflow/files/{{(data_interval_end.in_timezone("Asia/Seoul") - macros.timedelta(days=1)) | ds_nodash}}',
         file_name='tbCycleRentUseDayInfo.csv',
         base_dt='{{ (data_interval_end.in_timezone("Asia/Seoul") - macros.timedelta(days=1)) | ds_nodash }}'
 
     )
 
 
-    # '''서울시 공공자전거 대여소 현황'''
-    # Seoul_share_bike_starion_List=SeoulApiToCsvOperator(
-    #     task_id = 'Seoul_share_bike_starion_List',
-    #     dataset_nm='bikeList',
-    #     path='airflow/files/bikeList/{{data_interval_end.in_timezone("Asia/Seoul") | ds_nodash}}',
-    #     file_name='bikeList.csv'
-    # )
+    '''서울시 공공자전거 대여소 현황'''
+    Seoul_share_bike_starion_List=SeoulApiToCsvOperator(
+        task_id = 'Seoul_share_bike_starion_List',
+        dataset_nm='bikeList',
+        path='airflow/files/{{data_interval_end.in_timezone("Asia/Seoul") | ds_nodash}}',
+        file_name='bikeList.csv',
+        base_dt= None
+    )
 
 
-    tb_souel_sharebike_info 
+    tb_souel_sharebike_info >> Seoul_share_bike_starion_List
