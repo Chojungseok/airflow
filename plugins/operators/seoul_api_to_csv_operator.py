@@ -15,6 +15,7 @@ class SeoulApiToCsvOperator(BaseOperator):
 
     def execute(self, context):
         import os
+        import json
 
         connetion = BaseHook.get_connection(self.http_conn_id)
         self.base_url = f'http://{connetion.host}:{connetion.port}/{self.endpoint}'
@@ -45,25 +46,15 @@ class SeoulApiToCsvOperator(BaseOperator):
                    'charset': 'utf-8',
                    'Accept': '*/*'
                    }
-        
+
         request_url = f'{base_url}/{start_row}/{end_row}'
         if self.base_dt is not None:
             request_url = f'{base_url}/{start_row}/{end_row}/{self.base_dt}'
-        response = requests.get(request_url, headers = headers)
-        if response.status_code != 200:
-            self.log.error(f"API 요청 실패: 상태 코드 {response.status_code}")
-            raise Exception(f"API 요청 실패: 상태 코드 {response.status_code}")
+        response = response.get(request_url, headers = headers)
+        content = json.loads(response.text)
 
-        try:
-            contents = json.loads(response.text)
-            if not isinstance(contents, dict):
-                raise ValueError("JSON 응답이 예상된 형식이 아닙니다.")
-        except json.JSONDecodeError as e:
-            self.log.error(f"JSON 파싱 오류: {e}")
-            raise
-
-        key_nm = list(contents.keys())[0] if contents else None
-        row_data = contents.get(key_nm, {}).get('row', [])
+        key_nm = list(content.keys())[0]
+        row_data = content.get(key_nm).get('row')
         row_df = pd.DataFrame(row_data)
 
         return row_df
