@@ -1,4 +1,3 @@
 venv
 .env
 .datatime_dateutil_practice
-.dags/dags_base_branch_operator
