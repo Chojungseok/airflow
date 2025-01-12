@@ -50,10 +50,20 @@ class SeoulApiToCsvOperator(BaseOperator):
         if self.base_dt is not None:
             request_url = f'{base_url}/{start_row}/{end_row}/{self.base_dt}'
         response = requests.get(request_url, headers = headers)
-        contents = json.loads(response.text)
+        if response.status_code != 200:
+            self.log.error(f"API 요청 실패: 상태 코드 {response.status_code}")
+            raise Exception(f"API 요청 실패: 상태 코드 {response.status_code}")
 
-        key_nm = list(contents.keys())[0]
-        row_data = contents.get(key_nm).get('row')
+        try:
+            contents = json.loads(response.text)
+            if not isinstance(contents, dict):
+                raise ValueError("JSON 응답이 예상된 형식이 아닙니다.")
+        except json.JSONDecodeError as e:
+            self.log.error(f"JSON 파싱 오류: {e}")
+            raise
+
+        key_nm = list(contents.keys())[0] if contents else None
+        row_data = contents.get(key_nm, {}).get('row', [])
         row_df = pd.DataFrame(row_data)
 
         return row_df
