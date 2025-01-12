@@ -11,7 +11,7 @@ class SeoulApiToCsvOperator(BaseOperator):
         self.path = path
         self.file_name = file_name
         self.endpoint = '{{var.value.apikey_openapi_seoul_go_kr}}/json/' + dataset_nm
-        self.base_dt = base_dt
+        self.base_dt = base_dt 
 
     def execute(self, context):
         import os
@@ -50,14 +50,11 @@ class SeoulApiToCsvOperator(BaseOperator):
         request_url = f'{base_url}/{start_row}/{end_row}'
         if self.base_dt is not None:
             request_url = f'{base_url}/{start_row}/{end_row}/{self.base_dt}'
-        response = requests.get(request_url)
+        response = requests.get(request_url, headers)
         content = json.loads(response.text)
 
-        # key_nm = list(content.keys())[0]
-        print(request_url)
-        print(content)
-        print(type(content))
-        # row_data = content.get(key_nm).get('row')
-        # row_df = pd.DataFrame(row_data)
+        key_nm = list(content.keys())[0]
+        row_data = content.get(key_nm).get('row')
+        row_df = pd.DataFrame(row_data)
 
-        # return row_df
+        return row_df
