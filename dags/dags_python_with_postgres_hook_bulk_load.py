@@ -20,6 +20,6 @@ with DAG(
         python_callable = insrt_postgres,
         op_kwargs={'postgres_conn_id':'conn-db-postgres-custom',
                    'tbl_nm':'tbCycleRentUseDayInfo_bulk1',
-                   'file_nm':'/opt/airflow/files/tbCycleRentUseDayInfo/{{(data_interval_end.in_timezone("Asia/Seoul") - macros.timedelta(days=2)) | ds_nodash}}/tbCycleRentUseDayInfo.csv'}
+                   'file_nm':'/opt/airflow/files/tbCycleRentUseDayInfo/{{(data_interval_end.in_timezone("Asia/Seoul") - macros.timedelta(days=1)) | ds_nodash}}/tbCycleRentUseDayInfo.csv'}
 
     )
