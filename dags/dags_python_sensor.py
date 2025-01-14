@@ -15,7 +15,7 @@ with DAG(
         import json
         from dateutil import relativedelta
         connection = BaseHook.get_connection(http_conn_id)
-        url = f'http://{connection.host}:{connection.port}/{endpoint}/1/100'
+        url = f'http://{connection.host}:{connection.port}/{endpoint}/1/100/{{(data_interval_end.in_timezone("Asia/Seoul") - macros.timedelta(days=1)) | ds_nodash}}'
         response = requests.get(url)
 
         contents = json.loads(response.text)
@@ -41,7 +41,7 @@ with DAG(
     sensor_task = PythonSensor(
         task_id = 'sensor_task',
         python_callable= check_api_update,
-        op_kwargs={'http_conn_id':'openapi.seoul.kr',
+        op_kwargs={'http_conn_id':'openapi.seoul.go.kr',
                    'endpoint':'{{var.value.apikey_openapi_seoul_go_kr}}/json/tbCycleRentUseDayInfo',
                    'base_dt_col':'RENT_DT'},
         poke_interval = 600,
