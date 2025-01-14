@@ -44,7 +44,7 @@ with DAG(
     bash_task = BashOperator(
         task_id = 'bash_task',
         env={'FILE':'/opt/airflow/files/tbCycleRentUseDayInfo/{{(data_interval_end.in_timezone("Asia/Seoul") - macros.timedelta(days=1)) | ds_nodash}}/tbCycleRentUseDayInfo.csv'},
-        bash_command='echo "건수: 'cat $FILE | wc -1'"',
+        bash_command='echo "건수: `cat $FILE | wc -l`"',
     )
 
 
