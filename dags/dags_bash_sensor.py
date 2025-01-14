@@ -36,7 +36,7 @@ with DAG(
                                 exit 1
                         fi''',
         poke_interval = 30,
-        timeout = 60*2,
+        timeout = 60*9,
         mode = 'reschedule',
         soft_fail=True
     )
