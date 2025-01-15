@@ -20,7 +20,7 @@ class SeoulAPIDateSensor(BaseSensorOperator):
 
         super().__init__(**kwargs)
         self.http_conn_id = 'openapi.seoul.go.kr'
-        self.endpoint = '{{var.value.apikey_openapi_seoul_go_kr}}/json/'+ dataset_nm + '/1/100/{{(data_interval_end.in_timezone("Asia/Seoul") | ds_nodash}}'
+        self.endpoint = '{{var.value.apikey_openapi_seoul_go_kr}}/json/'+ dataset_nm + '/1/100/{{(data_interval_end.in_timezone("Asia/Seoul") - macros.timedelta(days=1)) | ds_nodash}}'
         self.base_dt_col = base_dt_col
         self.day_off = day_off
 
@@ -39,7 +39,7 @@ class SeoulAPIDateSensor(BaseSensorOperator):
         last_dt = row_data[0].get(self.base_dt_col)
         last_data = last_dt[:10]
         last_date = last_data.replace('.', '-').replace('/','-')
-        search_ymd = (context.get('data_interval_end').in_timezone('Asia/Seoul') + relativedelta(days=self.day_off)).strftime('%Y-%m-%d')
+        search_ymd = ((context.get('data_interval_end')- macros.timedelta(days=1)).in_timezone('Asia/Seoul') + relativedelta(days=self.day_off)).strftime('%Y-%m-%d')
 
 
         try:
