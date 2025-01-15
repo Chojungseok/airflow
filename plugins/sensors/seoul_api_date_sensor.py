@@ -39,7 +39,8 @@ class SeoulAPIDateSensor(BaseSensorOperator):
         last_dt = row_data[0].get(self.base_dt_col)
         last_data = last_dt[:10]
         last_date = last_data.replace('.', '-').replace('/','-')
-        search_ymd = (context.get('data_interval_end')).in_timezone('Asia/Seoul')+relativedelta(days=self.day_off).strftime('%Y-%m-%d')
+        search_ymd = (context.get('data_interval_end').in_timezone('Asia/Seoul') + relativedelta(days=self.day_off)).strftime('%Y-%m-%d')
+
 
         try:
             import pendulum
