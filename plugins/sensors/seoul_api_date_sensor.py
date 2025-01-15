@@ -20,7 +20,7 @@ class SeoulAPIDateSensor(BaseSensorOperator):
 
         super().__init__(**kwargs)
         self.http_conn_id = 'openapi.seoul.go.kr'
-        self.endpoint = '{{var.value.apikey_openapi_seoul_go_kr}}/json/'+ dataset_nm + '/1/100/{{(data_interval_end.in_timezone("Asia/Seoul") - macros.timedelta(days=1)) | ds_nodash}}'
+        self.endpoint = '{{var.value.apikey_openapi_seoul_go_kr}}/json/'+ dataset_nm + '/1/100/{{(data_interval_end.in_timezone("Asia/Seoul") - macros.timedelta(days=2)) | ds_nodash}}'
         self.base_dt_col = base_dt_col
         self.day_off = day_off
 
