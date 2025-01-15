@@ -1,5 +1,6 @@
 from airflow.sensors.base import BaseSensorOperator
 from airflow.hooks.base import BaseHook
+import datetime
 
 '''
 서울시 공공데이터 API추출시 특정 날짜 컬럼을 조사하여
@@ -39,7 +40,7 @@ class SeoulAPIDateSensor(BaseSensorOperator):
         last_dt = row_data[0].get(self.base_dt_col)
         last_data = last_dt[:10]
         last_date = last_data.replace('.', '-').replace('/','-')
-        search_ymd = ((context.get('data_interval_end')- macros.timedelta(days=1)).in_timezone('Asia/Seoul') + relativedelta(days=self.day_off)).strftime('%Y-%m-%d')
+        search_ymd = ((context.get('data_interval_end') - datetime.timedelta(days=1)).in_timezone('Asia/Seoul') + relativedelta(days=self.day_off)).strftime('%Y-%m-%d')
 
 
         try:
